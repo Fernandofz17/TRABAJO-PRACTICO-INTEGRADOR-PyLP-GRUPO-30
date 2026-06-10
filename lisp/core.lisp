@@ -100,3 +100,21 @@
           tiempo
           color-anterior
           color-nuevo))
+
+;; ========================================================
+;; FUNCIÓN: recomendacion-ciclo
+;; NATURALEZA: Pura
+;; ESTRATEGIA: Predicado (COND)
+;; IMPACTO: No destructiva
+;; ========================================================
+
+(defun recomendacion-ciclo (duracion)
+  (cond
+    ((< duracion 35)
+     "Ciclo demasiado corto")
+
+    ((<= duracion 150)
+     "Ciclo dentro del rango recomendado")
+
+    (t
+     "Ciclo demasiado largo")))
