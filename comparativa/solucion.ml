@@ -1,4 +1,4 @@
-# (*
+9# (*
 
 FUNCIÓN: transicion
 NATURALEZA: Pura
@@ -130,3 +130,68 @@ FIN DE LOS CASOS DE PRUEBA
 ==========================
 
 *)
+
+
+
+
+
+(* ========
+Definición de Tipos Algebraicos (ADTs)
+========
+*)
+type color =
+  | Rojo
+  | Amarillo
+  | Verde
+
+(* ¡Nuevo! Definimos las acciones posibles en lugar de usar strings *)
+type accion = 
+  | CambiarAVerde 
+  | CambiarAAmarillo 
+  | CambiarARojo 
+  | AccionInvalida
+
+(*
+======================================================
+FUNCIÓN: transicion
+NATURALEZA: Pura 
+ESTRATEGIA: Pattern Matching (match ... with)
+IMPACTO: No destructiva
+
+Descripción:
+Recibe el estado actual y el estado deseado. Mediante pattern matching
+evalúa si la transición es legal. 
+Retorna una tupla: (Nuevo_Estado, Accion_Realizada).
+======================================================
+*)
+
+(* Nota: Agregamos anotaciones de tipo (color -> color -> color * accion) 
+   para dejar explícito el contrato de la función *)
+let transicion (color_actual: color) (cambiar_a: color) : color * accion =
+  match (color_actual, cambiar_a) with
+  | (Rojo, Verde) -> (Verde, CambiarAVerde)
+  | (Verde, Amarillo) -> (Amarillo, CambiarAAmarillo)
+  | (Amarillo, Rojo) -> (Rojo, CambiarARojo)
+  | _ -> (color_actual, AccionInvalida)
+
+
+(*
+======================================================
+FUNCIÓN: timer
+NATURALEZA: Pura
+ESTRATEGIA: Condicionales (Orientado a Expresiones)
+IMPACTO: No destructiva
+
+Descripción:
+Calcula el estado del semáforo según el timestamp.
+======================================================
+*)
+
+let timer (tiempo_unix: int) : color =
+  let ciclo_total = 216 in
+  let instante = tiempo_unix mod ciclo_total in
+  
+  (* En OCaml, el if/else es una expresión que retorna un valor directamente *)
+  if instante < 90 then Rojo
+  else if instante < 96 then Amarillo
+  else Verde
