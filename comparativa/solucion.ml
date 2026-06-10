@@ -191,7 +191,12 @@ let timer (tiempo_unix: int) : color =
   let ciclo_total = 216 in
   let instante = tiempo_unix mod ciclo_total in
   
-  (* En OCaml, el if/else es una expresión que retorna un valor directamente *)
-  if instante < 90 then Rojo
-  else if instante < 96 then Amarillo
-  else Verde
+  (* 0 a 89: 90 segundos de Rojo *)
+  if instante < 90 then 
+    Rojo
+  (* 90 a 209: 120 segundos de Verde *)
+  else if instante < 210 then 
+    Verde
+  (* 210 a 215: 6 segundos de Amarillo *)
+  else 
+    Amarillo
