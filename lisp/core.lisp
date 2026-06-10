@@ -118,3 +118,15 @@
 
     (t
      "Ciclo demasiado largo")))
+
+;; ========================================================
+;; FUNCIÓN: duracion-ciclo
+;; NATURALEZA: Pura
+;; ESTRATEGIA: Cálculo aritmético
+;; IMPACTO: No destructiva
+;; ========================================================
+
+(defun duracion-ciclo ()
+  (+ (obtener-tiempo :rojo)
+     (obtener-tiempo :amarillo)
+     (obtener-tiempo :verde)))
