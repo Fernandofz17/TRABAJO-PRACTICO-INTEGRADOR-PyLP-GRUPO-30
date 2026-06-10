@@ -87,3 +87,16 @@
 
       (t
        'verde))))
+;; ========================================================
+;; FUNCIÓN: log-cambio
+;; NATURALEZA: Impura
+;; ESTRATEGIA: Formateo de salida
+;; IMPACTO: No destructiva
+;; ========================================================
+
+(defun log-cambio (tiempo color-anterior color-nuevo)
+  (format t
+          "Tiempo ~A: la luz ha cambiado de ~A a ~A~%"
+          tiempo
+          color-anterior
+          color-nuevo))
