@@ -61,3 +61,29 @@
 
     (t
      (list color-actual 'accion-por-defecto))))
+
+
+
+  ;; ========================================================
+;; FUNCIÓN: timer-semaforo (se cambio el nombre de la funcion principal porque generaba conflicto, más info en bitacora de depuracion)
+;; NATURALEZA: Pura
+;; ESTRATEGIA: Cálculo matemático
+;; IMPACTO: No destructiva
+;; ========================================================
+
+(defun timer-semaforo (tiempo-unix)
+  (let* ((rojo (obtener-tiempo :rojo))
+         (amarillo (obtener-tiempo :amarillo))
+         (verde (obtener-tiempo :verde))
+         (ciclo (+ rojo amarillo verde))
+         (instante (mod tiempo-unix ciclo)))
+
+    (cond
+      ((< instante rojo)
+       'rojo)
+
+      ((< instante (+ rojo amarillo))
+       'amarillo)
+
+      (t
+       'verde))))
