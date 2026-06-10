@@ -129,12 +129,6 @@ Rojo
 FIN DE LOS CASOS DE PRUEBA
 ==========================
 
-*)
-
-
-
-
-
 (* ========
 Definición de Tipos Algebraicos (ADTs)
 ========
@@ -144,7 +138,6 @@ type color =
   | Amarillo
   | Verde
 
-(* ¡Nuevo! Definimos las acciones posibles en lugar de usar strings *)
 type accion = 
   | CambiarAVerde 
   | CambiarAAmarillo 
@@ -164,9 +157,6 @@ evalúa si la transición es legal.
 Retorna una tupla: (Nuevo_Estado, Accion_Realizada).
 ======================================================
 *)
-
-(* Nota: Agregamos anotaciones de tipo (color -> color -> color * accion) 
-   para dejar explícito el contrato de la función *)
 let transicion (color_actual: color) (cambiar_a: color) : color * accion =
   match (color_actual, cambiar_a) with
   | (Rojo, Verde) -> (Verde, CambiarAVerde)
@@ -186,11 +176,10 @@ Descripción:
 Calcula el estado del semáforo según el timestamp.
 ======================================================
 *)
-
 let timer (tiempo_unix: int) : color =
   let ciclo_total = 216 in
   let instante = tiempo_unix mod ciclo_total in
-  
+
   (* 0 a 89: 90 segundos de Rojo *)
   if instante < 90 then 
     Rojo
@@ -199,4 +188,20 @@ let timer (tiempo_unix: int) : color =
     Verde
   (* 210 a 215: 6 segundos de Amarillo *)
   else 
-    Amarillo
+    Amarillo 
+
+
+(*
+======================================================
+CASOS DE PRUEBA (Actualizados para la consola)
+======================================================
+*)
+let prueba_1 = transicion Rojo Verde;;        (* (Verde, CambiarAVerde) *)
+let prueba_2 = transicion Verde Amarillo;;    (* (Amarillo, CambiarAAmarillo) *)
+let prueba_3 = transicion Amarillo Rojo;;     (* (Rojo, CambiarARojo) *)
+let prueba_mala = transicion Rojo Amarillo;;  (* (Rojo, AccionInvalida) *)
+
+let prueba_t1 = timer 0;;   (* Rojo *)
+let prueba_t2 = timer 100;; (* Verde *)
+let prueba_t3 = timer 212;; (* Amarillo *)
+
