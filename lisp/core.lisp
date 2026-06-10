@@ -130,3 +130,33 @@
   (+ (obtener-tiempo :rojo)
      (obtener-tiempo :amarillo)
      (obtener-tiempo :verde)))
+
+
+;; ========================================================
+;; FUNCIÓN: ciclos-por-tiempo
+;; NATURALEZA: Pura
+;; ESTRATEGIA: Cálculo aritmético
+;; IMPACTO: No destructiva
+;; ========================================================
+
+(defun ciclos-por-tiempo (minutos)
+  (floor (/ (* minutos 60)
+            (duracion-ciclo))))
+
+;; ========================================================
+;; FUNCIÓN: distribucion-temporal
+;; NATURALEZA: Pura
+;; ESTRATEGIA: Cálculo aritmético
+;; IMPACTO: No destructiva
+;; ========================================================
+
+(defun distribucion-temporal ()
+  (let* ((rojo (obtener-tiempo :rojo))
+         (amarillo (obtener-tiempo :amarillo))
+         (verde (obtener-tiempo :verde))
+         (ciclo (duracion-ciclo)))
+
+    (list
+      (cons 'rojo (* 100.0 (/ rojo ciclo)))
+      (cons 'amarillo (* 100.0 (/ amarillo ciclo)))
+      (cons 'verde (* 100.0 (/ verde ciclo))))))
