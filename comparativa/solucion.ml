@@ -128,6 +128,8 @@ Rojo
 ========================================================
 FIN DE LOS CASOS DE PRUEBA
 ==========================
+*)
+
 
 (* ========
 Definición de Tipos Algebraicos (ADTs)
