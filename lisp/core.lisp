@@ -64,8 +64,8 @@
 
 
 
-  ;; ========================================================
-;; FUNCIÓN: timer-semaforo (se cambio el nombre de la funcion principal porque generaba conflicto, más info en bitacora de depuracion)
+;; ========================================================
+;; FUNCIÓN: timer-semaforo
 ;; NATURALEZA: Pura
 ;; ESTRATEGIA: Cálculo matemático
 ;; IMPACTO: No destructiva
@@ -79,14 +79,17 @@
          (instante (mod tiempo-unix ciclo)))
 
     (cond
+      ;; 0 a 89
       ((< instante rojo)
        'rojo)
 
-      ((< instante (+ rojo amarillo))
-       'amarillo)
+      ;; 90 a 209
+      ((< instante (+ rojo verde))
+       'verde)
 
+      ;; 210 a 215
       (t
-       'verde))))
+       'amarillo))))
 ;; ========================================================
 ;; FUNCIÓN: log-cambio
 ;; NATURALEZA: Impura
