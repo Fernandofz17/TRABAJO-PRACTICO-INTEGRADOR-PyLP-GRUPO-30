@@ -160,3 +160,38 @@
       (cons 'rojo (* 100.0 (/ rojo ciclo)))
       (cons 'amarillo (* 100.0 (/ amarillo ciclo)))
       (cons 'verde (* 100.0 (/ verde ciclo))))))
+
+;; ========================================================
+;; FUNCIÓN: leer-configuracion
+;; NATURALEZA: Impura
+;; ESTRATEGIA: Lectura de archivo JSON
+;; IMPACTO: No destructiva
+;; ========================================================
+
+(defun leer-configuracion ()
+  (with-open-file (stream "config.json"
+                          :direction :input)
+    (cl-json:decode-json stream)))
+
+
+;; ========================================================
+;; FUNCIÓN: obtener-tiempo
+;; NATURALEZA: Pura
+;; ESTRATEGIA: Búsqueda en lista asociativa
+;; IMPACTO: No destructiva
+;; ========================================================
+
+(defun obtener-tiempo (color)
+  (cdr (assoc color
+              (leer-configuracion)
+              :test #'eq)))
+
+;; ========================================================
+;; FUNCIÓN: ciclos-por-tiempo
+;; NATURALEZA: Pura
+;; ESTRATEGIA: Cálculo aritmético
+;; IMPACTO: No destructiva
+;; ========================================================
+(defun ciclos-por-tiempo (minutos)
+  (floor (/ (* minutos 60)
+            (duracion-ciclo))))
