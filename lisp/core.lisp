@@ -70,7 +70,58 @@
 ;; ESTRATEGIA: Cálculo matemático
 ;; IMPACTO: No destructiva
 ;; ========================================================
-
+;; DESCRIPCIÓN DEL FUNCIONAMIENTO
+;;
+;; Esta función determina automáticamente qué color del
+;; semáforo debe encontrarse activo para un instante de
+;; tiempo determinado expresado en formato Unix.
+;;
+;; A diferencia de una implementación con tiempos fijos,
+;; las duraciones de cada estado no se encuentran
+;; codificadas directamente en el programa. Los valores
+;; son obtenidos dinámicamente desde el archivo externo
+;; "config.json" mediante las funciones
+;; LEER-CONFIGURACION y OBTENER-TIEMPO.
+;;
+;; Gracias a este diseño, cualquier modificación realizada
+;; sobre los tiempos de rojo, amarillo o verde impactará
+;; automáticamente en el comportamiento del sistema sin
+;; necesidad de modificar ni recompilar el código fuente.
+;;
+;; La función calcula la duración total del ciclo y luego
+;; utiliza la operación modular (MOD) para determinar en
+;; qué posición del ciclo se encuentra el instante
+;; consultado.
+;;
+;; Con la configuración actual de prueba config.json:
+;;
+;; {
+;;   "rojo": 90,
+;;   "amarillo": 6,
+;;   "verde": 120
+;; }
+;;
+;; el ciclo total es de 216 segundos y la secuencia de
+;; estados queda definida como:
+;;
+;; ROJO (0-89 s)
+;; VERDE (90-209 s)
+;; AMARILLO (210-215 s)
+;;
+;; Luego el ciclo vuelve a comenzar desde ROJO.
+;;
+;; Ejemplos:
+;;
+;; (timer-semaforo 0)   => ROJO
+;; (timer-semaforo 90)  => VERDE
+;; (timer-semaforo 210) => AMARILLO
+;; (timer-semaforo 216) => ROJO
+;;
+;; Esta función participa además del principio de
+;; composición funcional, ya que reutiliza las funciones
+;; OBTENER-TIEMPO y LEER-CONFIGURACION para obtener los
+;; parámetros necesarios para su cálculo.
+;; ========================================================
 (defun timer-semaforo (tiempo-unix)
   (let* ((rojo (obtener-tiempo :rojo))
          (amarillo (obtener-tiempo :amarillo))
