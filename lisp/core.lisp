@@ -44,7 +44,40 @@
 ;; ESTRATEGIA: Condicional (COND)
 ;; IMPACTO: No destructiva
 ;; ========================================================
-
+;; DESCRIPCIÓN DE LA FUNCIÓN TRANSICION
+;;
+;; Esta función modela las transiciones permitidas entre
+;; los distintos estados del semáforo. Recibe como entrada
+;; el estado actual y el color de destino solicitado.
+;;
+;; Mediante la estructura condicional COND verifica si la
+;; transición respeta la secuencia definida por el sistema:
+;;
+;;   EN-ROJO      -> VERDE
+;;   EN-VERDE     -> AMARILLO
+;;   EN-AMARILLO  -> ROJO
+;;
+;; Cuando la transición es válida, retorna una lista
+;; compuesta por el estado actual y una acción descriptiva
+;; indicando el cambio a realizar.
+;;
+;; Si la combinación de estados no corresponde a una
+;; transición permitida, la función devuelve el estado
+;; actual junto con el símbolo ACCION-POR-DEFECTO.
+;;
+;; Ejemplos:
+;;
+;; (transicion 'en-rojo 'verde)
+;; => (EN-ROJO "cambiar-a-verde")
+;;
+;; (transicion 'en-verde 'rojo)
+;; => (EN-VERDE ACCION-POR-DEFECTO)
+;;
+;; La función es considerada pura porque no modifica
+;; variables globales, no realiza operaciones de entrada/
+;; salida y siempre produce el mismo resultado para los
+;; mismos parámetros de entrada.
+;; ========================================================
 (defun transicion (color-actual cambiar-a)
   (cond
     ((and (eq color-actual 'en-rojo)
