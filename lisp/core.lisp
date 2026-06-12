@@ -180,6 +180,14 @@
 ;; ESTRATEGIA: Formateo de salida
 ;; IMPACTO: No destructiva
 ;; ========================================================
+;; DESCRIPCIÓN:
+;; Registra en la consola cada cambio de estado del semáforo.
+;; El parámetro TIEMPO representa un timestamp Unix (Epoch Time),
+;; es decir, la cantidad de segundos transcurridos desde
+;; el 1 de enero de 1970 a las 00:00:00 UTC.
+;; Su objetivo es permitir la reconstrucción histórica
+;; de los estados del semáforo para tareas de auditoría
+;; y análisis forense del tráfico.
 
 (defun log-cambio (tiempo color-anterior color-nuevo)
   (format t
