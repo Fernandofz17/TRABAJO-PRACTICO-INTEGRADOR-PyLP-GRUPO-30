@@ -220,7 +220,34 @@
 ;; ESTRATEGIA: Cálculo aritmético
 ;; IMPACTO: No destructiva
 ;; ========================================================
-
+;; DESCRIPCIÓN:
+;; Calcula la duración total de un ciclo completo del
+;; semáforo sumando los tiempos configurados para los
+;; estados rojo, amarillo y verde.
+;;
+;; Los valores son obtenidos dinámicamente desde el
+;; archivo de configuración externo (config.json)
+;; mediante la función OBTENER-TIEMPO.
+;;
+;; Gracias a este diseño, cualquier modificación en la
+;; duración de los estados se refleja automáticamente
+;; sin necesidad de alterar el código fuente.
+;;
+;; Ejemplo con la configuración:
+;; {
+;;   "rojo": 90,
+;;   "amarillo": 6,
+;;   "verde": 120
+;; }
+;;
+;; Duración total:
+;; 90 + 6 + 120 = 216 segundos
+;;
+;; Esta función es utilizada por otras funciones del
+;; sistema, como TIMER-SEMÁFORO, CICLOS-POR-TIEMPO y
+;; DISTRIBUCION-TEMPORAL, favoreciendo la composición
+;; funcional y evitando la duplicación de cálculos, extender innecesesariamente el código.
+;; ========================================================
 (defun duracion-ciclo ()
   (+ (obtener-tiempo :rojo)
      (obtener-tiempo :amarillo)
