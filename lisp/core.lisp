@@ -202,6 +202,47 @@
 ;; ESTRATEGIA: Predicado (COND)
 ;; IMPACTO: No destructiva
 ;; ========================================================
+;; FUNCIÓN: recomendacion-ciclo
+;; NATURALEZA: Pura
+;; ESTRATEGIA: Predicado (COND)
+;; IMPACTO: No destructiva
+;;
+;; DESCRIPCIÓN:
+;; Evalúa la duración total de un ciclo semafórico y
+;; genera una recomendación basada en criterios de
+;; ingeniería de tránsito.
+;;
+;; Según la consigna, los ciclos menores a 35 segundos
+;; o mayores a 150 segundos suelen resultar incómodos
+;; para los conductores y pueden afectar la percepción
+;; del flujo vehicular.
+;;
+;; La función recibe como parámetro la duración total
+;; del ciclo y clasifica el resultado en tres categorías:
+;;
+;; - Menor a 35 segundos:
+;;   "Ciclo demasiado corto"
+;;
+;; - Entre 35 y 150 segundos:
+;;   "Ciclo dentro del rango recomendado"
+;;
+;; - Mayor a 150 segundos:
+;;   "Ciclo demasiado largo"
+;;
+;; Esta función no modifica datos ni depende de estados
+;; externos, por lo que siempre produce el mismo
+;; resultado para la misma duración recibida.
+;;
+;; Ejemplos:
+;; (recomendacion-ciclo 20)
+;; => "Ciclo demasiado corto"
+;;
+;; (recomendacion-ciclo 120)
+;; => "Ciclo dentro del rango recomendado"
+;;
+;; (recomendacion-ciclo 216)
+;; => "Ciclo demasiado largo"
+;; ========================================================
 
 (defun recomendacion-ciclo (duracion)
   (cond
