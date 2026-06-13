@@ -376,3 +376,71 @@
               :test #'eq)))
 
 
+
+
+#| ITERACION 2/ EXTENSION 2|#
+
+;; ========================================================
+;; FUNCIÓN: informe
+;; NATURALEZA: Impura
+;; ESTRATEGIA: Escritura en archivo de texto plano
+;; IMPACTO: Genera un archivo externo en el sistema
+;;
+;; DESCRIPCIÓN:
+;; Esta función implementa un mecanismo de persistencia
+;; para almacenar el historial de eventos del sistema
+;; semafórico.
+;;
+;; Recibe una lista de registros y genera un archivo
+;; llamado "informe-ejecucion-semaforo.txt" que contiene
+;; el detalle de la ejecución del programa.
+;;
+;; Se utiliza WITH-OPEN-FILE para administrar de forma
+;; segura la apertura y cierre del archivo. La iteración
+;; sobre los eventos se realiza mediante DOLIST,
+;; escribiendo cada registro en una línea independiente.
+;;
+;; Esta funcionalidad permite conservar evidencia de los
+;; cambios de estado del semáforo aun después de finalizar
+;; la ejecución del programa.
+;;
+;; EJEMPLO DE USO:
+;;
+;; (informe
+;;  '("Tiempo 0: ROJO"
+;;    "Tiempo 90: VERDE"
+;;    "Tiempo 210: AMARILLO-INTERMITENTE"))
+;;
+;; ARCHIVO GENERADO:
+;;
+;; Informe de Ejecución del Sistema Semafórico
+;; =========================================
+;; Tiempo 0: ROJO
+;; Tiempo 90: VERDE
+;; Tiempo 210: AMARILLO-INTERMITENTE
+;; --- Fin del Informe ---
+;;
+;; ========================================================
+
+(defun informe (datos)
+
+  (with-open-file
+      (stream
+       "informe-ejecucion-semaforo.txt"
+       :direction :output
+       :if-exists :supersede
+       :if-does-not-exist :create)
+
+    (format stream
+            "Informe de Ejecución del Sistema Semafórico~%")
+
+    (format stream
+            "=========================================~%~%")
+
+    (dolist (evento datos)
+      (format stream "~A~%" evento))
+
+    (format stream
+            "~%--- Fin del Informe ---~%")))
+
+
