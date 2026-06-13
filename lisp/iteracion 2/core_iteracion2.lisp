@@ -21,6 +21,11 @@
 ;; ROJO
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#|ACLARACION: La logica de las funciones es la misma que la utilizada en la Iteracion uno, por eso
+se omiten comentarios explicaciticos de aca funcion, a fin de no extender el codigo innecesariamente
+, solo se aplica intermitencia solicitada en la iteracion 2, eso teniendo en cuenta la Extension 1.
+En cuanto a al Extension 2 se agrega la funcion encargada de la persistencia de datos, que crea el informe.
+
 
 
 ;; ========================================================
