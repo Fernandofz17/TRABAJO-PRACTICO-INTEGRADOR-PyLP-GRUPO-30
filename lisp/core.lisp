@@ -300,8 +300,34 @@
 ;; NATURALEZA: Pura
 ;; ESTRATEGIA: Cálculo aritmético
 ;; IMPACTO: No destructiva
+;;
+;; DESCRIPCIÓN:
+;; Calcula la cantidad de ciclos completos que realiza
+;; el semáforo dentro de un intervalo de tiempo expresado
+;; en minutos.
+;;
+;; La función convierte los minutos recibidos a segundos
+;; y divide dicho valor por la duración total de un ciclo,
+;; obtenida mediante la función DURACION-CICLO.
+;;
+;; Se utiliza FLOOR para conservar únicamente los ciclos
+;; completos, descartando cualquier fracción restante.
+;;
+;; Esta información puede utilizarse para tareas de
+;; planificación, simulación de tráfico, análisis de
+;; capacidad de la vía y estimación de mantenimiento.
+;;
+;; Ejemplo con un ciclo de 216 segundos:
+;;
+;; (ciclos-por-tiempo 15)
+;; 15 minutos = 900 segundos
+;; 900 / 216 = 4.16
+;; Resultado: 4 ciclos completos
+;;
+;; (ciclos-por-tiempo 60)
+;; 3600 / 216 = 16.66
+;; Resultado: 16 ciclos completos
 ;; ========================================================
-
 (defun ciclos-por-tiempo (minutos)
   (floor (/ (* minutos 60)
             (duracion-ciclo))))
