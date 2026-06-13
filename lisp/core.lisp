@@ -389,6 +389,40 @@
 ;; ESTRATEGIA: Lectura de archivo JSON
 ;; IMPACTO: No destructiva
 ;; ========================================================
+;; DESCRIPCIÓN:
+;;
+;; La función leer-configuracion es la encargada de cargar
+;; los parámetros externos del sistema desde el archivo
+;; "config.json".
+;;
+;; Utiliza la macro WITH-OPEN-FILE para abrir el archivo
+;; en modo lectura y garantizar que el recurso sea cerrado
+;; automáticamente al finalizar la operación, incluso si
+;; ocurre algún error durante el proceso.
+;;
+;; Una vez abierto el archivo, la biblioteca CL-JSON
+;; interpreta el contenido del documento JSON y lo
+;; convierte a una estructura de datos nativa de
+;; Common Lisp, permitiendo que otras funciones del
+;; sistema accedan a los tiempos configurados para cada
+;; estado del semáforo.
+;;
+;; Ejemplo de archivo:
+;;
+;; {
+;;   "rojo": 90,
+;;   "amarillo": 6,
+;;   "verde": 120
+;; }
+;;
+;; La función devuelve una estructura asociativa con los
+;; pares clave-valor obtenidos del archivo.
+;;
+;; Esta función representa el punto de conexión entre la
+;; configuración externa y la lógica interna del sistema,
+;; permitiendo modificar los tiempos del semáforo sin
+;; alterar el código fuente.
+;; ========================================================
 
 (defun leer-configuracion ()
   (with-open-file (stream "config.json"
@@ -401,6 +435,36 @@
 ;; NATURALEZA: Pura
 ;; ESTRATEGIA: Búsqueda en lista asociativa
 ;; IMPACTO: No destructiva
+;; ========================================================
+;; DESCRIPCIÓN:
+;;
+;; La función obtener-tiempo recupera la duración asociada
+;; a un color específico del semáforo a partir de la
+;; configuración almacenada en el archivo JSON.
+;;
+;; Para ello, invoca primero a leer-configuracion, que
+;; carga los datos externos, y luego utiliza ASSOC para
+;; buscar la clave correspondiente al color solicitado.
+;;
+;; Una vez encontrada la asociación, CDR extrae y retorna
+;; únicamente el valor numérico asociado a dicha clave.
+;;
+;; Ejemplos:
+;;
+;; (obtener-tiempo :rojo)      ; => 90
+;; (obtener-tiempo :amarillo)  ; => 6
+;; (obtener-tiempo :verde)     ; => 120
+;;
+;; Esta función actúa como una capa de abstracción entre
+;; la lógica del sistema y el formato de almacenamiento,
+;; evitando que el resto de las funciones conozcan cómo
+;; se encuentran organizados los datos dentro del archivo
+;; de configuración.
+;;
+;; Aunque la operación de búsqueda es determinística, el
+;; resultado depende del contenido actual del archivo
+;; externo, por lo que su comportamiento está vinculado a
+;; una fuente de datos externa.
 ;; ========================================================
 
 (defun obtener-tiempo (color)
