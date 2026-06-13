@@ -338,7 +338,40 @@
 ;; ESTRATEGIA: Cálculo aritmético
 ;; IMPACTO: No destructiva
 ;; ========================================================
-
+;; DESCRIPCIÓN:
+;;
+;; La función distribucion-temporal calcula el porcentaje
+;; de tiempo que cada color del semáforo permanece activo
+;; dentro de un ciclo completo.
+;;
+;; Para ello obtiene las duraciones configuradas para los
+;; estados rojo, amarillo y verde desde el archivo JSON,
+;; calcula la duración total del ciclo mediante la función
+;; duracion-ciclo y luego aplica la fórmula:
+;;
+;;   porcentaje = (tiempo-color / tiempo-total) * 100
+;;
+;; El resultado se devuelve como una lista asociativa
+;; (alist), donde cada color queda vinculado a su
+;; porcentaje de participación dentro del ciclo.
+;;
+;; Ejemplo con la configuración:
+;; rojo = 90 s
+;; amarillo = 6 s
+;; verde = 120 s
+;;
+;; ciclo total = 216 s
+;;
+;; (distribucion-temporal)
+;; => ((ROJO . 41.67)
+;;     (AMARILLO . 2.78)
+;;     (VERDE . 55.56))
+;;
+;; Esta información resulta útil para tareas de análisis,
+;; planificación y optimización del flujo vehicular,
+;; permitiendo conocer qué proporción del tiempo total
+;; permanece activa cada señal del semáforo.
+;; ========================================================
 (defun distribucion-temporal ()
   (let* ((rojo (obtener-tiempo :rojo))
          (amarillo (obtener-tiempo :amarillo))
