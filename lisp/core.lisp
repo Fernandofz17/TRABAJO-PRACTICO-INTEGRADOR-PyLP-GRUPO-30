@@ -519,6 +519,13 @@
 ;;
 ;; ========================================================
 
+(defun escribir-eventos (eventos stream)
+  (cond
+    ((null eventos) nil)
+    (t
+     (format stream "~A~%" (car eventos))
+     (escribir-eventos (cdr eventos) stream))))
+
 (defun informe (datos)
 
   (with-open-file
@@ -534,10 +541,7 @@
     (format stream
             "=========================================~%~%")
 
-    (dolist (evento datos)
-      (format stream "~A~%" evento))
+    (escribir-eventos datos stream)
 
     (format stream
             "~%--- Fin del Informe ---~%")))
-
-
